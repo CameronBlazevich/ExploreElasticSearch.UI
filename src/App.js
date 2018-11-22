@@ -1,21 +1,44 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import logo from "./logo.svg";
 import "./App.css";
 import SearchForm from "./searchForm";
-import HighlightApi from "./api/highlightApiMock";
+import SearchResultCollection from "./searchResults/searchResultCollection";
+import * as searchActions from "./actions/searchActions";
 
 class App extends Component {
+  handleSearchRequest = searchTerm => {
+    this.props.searchActions.doSearch(searchTerm);
+  };
   render() {
-    HighlightApi.getHighlights().then(result => console.log(result));
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <SearchForm />
+          {false && <img src={logo} className="App-logo" alt="logo" />}
         </header>
+        <SearchForm handleSubmit={this.handleSearchRequest} />
+        {this.props.searchResults && this.props.searchResults.results && (
+          <SearchResultCollection
+            searchResults={this.props.searchResults.results}
+          />
+        )}
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  searchResults: state.searchResults
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    searchActions: bindActionCreators(searchActions, dispatch)
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

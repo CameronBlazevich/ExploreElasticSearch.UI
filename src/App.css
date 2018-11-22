@@ -9,7 +9,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 25vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,4 +29,19 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.search-result {
+  text-align: left;
+  border: 2px solid black;
+  margin: 5px;
+  padding: 3px;
+}
+
+.search-result > p {
+  line-height: 0.8em;
+}
+
+.search-result > p > span {
+  color: magenta;
 }
