@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  /* text-align: center; */
 }
 
 .App-logo {
@@ -31,17 +31,10 @@
   }
 }
 
-.search-result {
-  text-align: left;
-  border: 2px solid black;
-  margin: 5px;
-  padding: 3px;
+.search-result-preview {
+  font-size: 0.8em;
 }
 
-.search-result > p {
-  line-height: 0.8em;
-}
-
-.search-result > p > span {
+p > span {
   color: magenta;
 }

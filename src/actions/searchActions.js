@@ -1,5 +1,5 @@
 import * as ActionTypes from "./actionTypes";
-import SearchResultsApi from "../api/searchResultsApiMock";
+import HighlightsApi from "../api/highlightsApiMock";
 
 export function searchRequest(searchTerm) {
   return { type: ActionTypes.SEARCH_REQUEST, searchTerm };
@@ -11,7 +11,7 @@ export function searchRequestSuccess(searchResults) {
 
 export function doSearch(searchTerm) {
   return function(dispatch) {
-    SearchResultsApi.search(searchTerm)
+    HighlightsApi.search(searchTerm)
       .then(searchResults => {
         dispatch(searchRequestSuccess(searchResults));
       })

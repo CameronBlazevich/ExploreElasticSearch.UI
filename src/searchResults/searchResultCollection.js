@@ -5,7 +5,7 @@ function SearchResultCollection(props) {
   const searchResults = props.searchResults.map(sr => (
     <SearchResult searchResult={sr} />
   ));
-  return <div className="container">{searchResults}</div>;
+  return <div>{searchResults}</div>;
 }
 
 export default SearchResultCollection;
