@@ -9,14 +9,15 @@ import { Media } from "reactstrap";
 // }
 
 function SearchResult({ searchResult }) {
+  const highlights = searchResult.highlights.map(highlight => <p
+    className="search-result-preview"
+    dangerouslySetInnerHTML={{ __html: highlight.snippet }}
+  />)
   return (
     <Media>
-      <Media body>
-        <Media heading>{searchResult.episodeInfo.title}</Media>
-        <p
-          className="search-result-preview"
-          dangerouslySetInnerHTML={{ __html: searchResult.text }}
-        />
+      <Media body className="parent-article">
+        <Media heading>{searchResult.parentArticle.title}</Media>
+        {highlights}
       </Media>
     </Media>
   );

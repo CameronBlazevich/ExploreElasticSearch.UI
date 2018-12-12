@@ -38,3 +38,11 @@
 p > span {
   color: magenta;
 }
+
+.parent-article {
+  height:300px;
+  overflow-y: scroll;
+  margin:5px;
+  border: 1px solid grey;
+  padding: 5px;
+}
