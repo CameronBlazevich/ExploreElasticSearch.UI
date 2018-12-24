@@ -1,16 +1,23 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { Row } from "reactstrap";
-import logo from "./logo.svg";
-import "./App.css";
-import SearchForm from "./searchForm";
-import SearchResultCollection from "./searchResults/searchResultCollection";
-import * as searchActions from "./actions/searchActions";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Row } from 'reactstrap';
+import logo from './logo.svg';
+import './App.css';
+import SearchForm from './searchForm';
+import SearchResultCollection from './searchResults/searchResultCollection';
+import RefinementList from './searchResults/refinementList';
+import { refineSearchResults } from './selectors';
+import * as searchActions from './actions/searchActions';
+import * as refinementActions from './actions/refinementActions';
 
 class App extends Component {
   handleSearchRequest = searchTerm => {
     this.props.searchActions.doSearch(searchTerm);
+  };
+  handleAutherSearchRefinement = author => {
+    const refinementCriteria = { field: 'author', value: author };
+    this.props.refinementActions.updateRefinementCriteria(refinementCriteria);
   };
   render() {
     return (
@@ -20,12 +27,20 @@ class App extends Component {
         </header>
 
         <Row>
-          <div className="col-md-4" />
+          <div className="col-md-4">
+            <div>Filters n Shit</div>
+            <RefinementList
+              refinementListItems={this.props.searchResults.authors}
+              onItemClick={this.handleAutherSearchRefinement}
+              attributeName="author"
+              refinementCriteria={this.props.searchCriteria.refinementCriteria}
+            />
+          </div>
           <div className="col-md-8">
             <SearchForm handleSubmit={this.handleSearchRequest} />
-            {this.props.searchResults && this.props.searchResults.results && (
+            {this.props.refinedSearchResults && (
               <SearchResultCollection
-                searchResults={this.props.searchResults.results}
+                searchResults={this.props.refinedSearchResults}
               />
             )}
           </div>
@@ -36,12 +51,15 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  searchResults: state.searchResults
+  searchResults: state.searchResults,
+  refinedSearchResults: refineSearchResults(state),
+  searchCriteria: state.searchCriteria
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    searchActions: bindActionCreators(searchActions, dispatch)
+    searchActions: bindActionCreators(searchActions, dispatch),
+    refinementActions: bindActionCreators(refinementActions, dispatch)
   };
 }
 

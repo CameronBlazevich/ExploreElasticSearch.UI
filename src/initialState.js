@@ -1,5 +1,6 @@
 const initialState = {
-  searchResults: { results: [] }
+  searchResults: { unrefinedSearchResults: [], authors:[] },
+  searchCriteria: { searchTerm: "", refinementCriteria: []}
 };
 
 export default initialState;

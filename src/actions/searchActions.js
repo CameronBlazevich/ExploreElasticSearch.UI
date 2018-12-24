@@ -12,6 +12,7 @@ export function searchRequestSuccess(searchResults) {
 
 export function doSearch(searchTerm) {
   return function(dispatch) {
+    dispatch(searchRequest(searchTerm));
     SearchResultApi.search(searchTerm)
       .then(searchResults => {
         dispatch(searchRequestSuccess(searchResults));
