@@ -46,3 +46,9 @@ p > span {
   border: 1px solid grey;
   padding: 5px;
 }
+
+.refinement-list {
+  margin:5px;
+  padding:3px;
+  
+}

@@ -19,22 +19,35 @@ class App extends Component {
     const refinementCriteria = { field: 'author', value: author };
     this.props.refinementActions.updateRefinementCriteria(refinementCriteria);
   };
+  handleParticipantSearchRefinement = participant => {
+    const refinementCriteria = { field: 'participants', value: participant };
+    this.props.refinementActions.updateRefinementCriteria(refinementCriteria);
+  };
   render() {
     return (
-      <div className="App">
+      <div className="App container">
         <header className="App-header">
           {false && <img src={logo} className="App-logo" alt="logo" />}
         </header>
 
         <Row>
           <div className="col-md-4">
-            <div>Filters n Shit</div>
+            <Row className="refinement-list">
             <RefinementList
               refinementListItems={this.props.searchResults.authors}
               onItemClick={this.handleAutherSearchRefinement}
               attributeName="author"
               refinementCriteria={this.props.searchCriteria.refinementCriteria}
             />
+            </Row>
+            <Row className="refinement-list">
+            <RefinementList
+              refinementListItems={this.props.searchResults.participants}
+              onItemClick={this.handleParticipantSearchRefinement}
+              attributeName="participants"
+              refinementCriteria={this.props.searchCriteria.refinementCriteria}
+            />
+            </Row>
           </div>
           <div className="col-md-8">
             <SearchForm handleSubmit={this.handleSearchRequest} />

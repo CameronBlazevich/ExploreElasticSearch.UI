@@ -1,13 +1,18 @@
-import * as ActionTypes from "../actions/actionTypes";
+import { union } from 'lodash.union';
+import * as ActionTypes from '../actions/actionTypes';
 
 export default (state = {}, action) => {
   switch (action.type) {
     case ActionTypes.SEARCH_REQUEST_SUCCESS:
-    const authors = getAuthorsFromSearchResults(action.searchResults);
+      const authors = getAuthorsFromSearchResults(action.searchResults);
+      const participants = getParticipantsFromSearchResults(
+        action.searchResults
+      );
       return {
         unrefinedSearchResults: action.searchResults,
         filteredResults: action.searchResults,
-        authors
+        authors,
+        participants
       };
 
     default:
@@ -15,6 +20,23 @@ export default (state = {}, action) => {
   }
 };
 
-const getAuthorsFromSearchResults = (searchResults) => {
-  return [{displayText: "Tim Ferriss"}, {displayText: "Rhonda Patrick"}, {displayText: "Dom Dagustino"} ]
-}
+const getAuthorsFromSearchResults = searchResults => {
+  const authors = mergeDedupe(searchResults.map(sr => sr.parentArticle.author));
+  const formattedAuthors = authors.map(a => ({ displayText: a }));
+  return formattedAuthors;
+};
+
+const getParticipantsFromSearchResults = searchResults => {
+  const participants = searchResults.map(sr =>
+    sr.parentArticle.participants.map(p => p.fullName)
+  );
+  const dedupedParticipants = mergeDedupe(participants);
+  const formattedParticipants = dedupedParticipants.map(p => ({
+    displayText: p
+  }));
+  return formattedParticipants;
+};
+
+const mergeDedupe = arrays => {
+  return [...new Set([].concat(...arrays))];
+};

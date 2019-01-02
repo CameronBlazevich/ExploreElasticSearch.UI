@@ -1,5 +1,5 @@
 const initialState = {
-  searchResults: { unrefinedSearchResults: [], authors:[] },
+  searchResults: { unrefinedSearchResults: [], authors:[], participants:[] },
   searchCriteria: { searchTerm: "", refinementCriteria: []}
 };
 

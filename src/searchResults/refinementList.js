@@ -21,7 +21,14 @@ function RefinementList(props) {
     />
   ));
 
-  return <div>{items}</div>;
+  return items.length > 0 ? (
+    <div>
+      <h5>{attributeName}</h5>
+      <div>{items}</div>
+    </div>
+  ) : (
+    <div />
+  );
 }
 
 export default RefinementList;

@@ -17,6 +17,7 @@ function SearchResult({ searchResult }) {
     <Media>
       <Media body className="parent-article">
         <Media heading>{searchResult.parentArticle.title}</Media>
+        <Media><h6>{searchResult.parentArticle.metaTitle} by {searchResult.parentArticle.author}</h6></Media>
         {highlights}
       </Media>
     </Media>
