@@ -12,6 +12,10 @@ export default (state = {}, action) => {
         [...state.refinementCriteria, action.refinementCriteria]
 
       return Object.assign({}, state, {...state, refinementCriteria: updateRefinementCriteria})
+
+    case ActionTypes.CLEAR_ALL_REFINEMENT_CRITERIA: 
+      return Object.assign({}, state, {...state, refinementCriteria:[]})
+      
     default:
       return state;
   }

@@ -19,3 +19,9 @@ export function updateRefinementCriteria(refinementCriteria) {
     dispatch(updateRefinementCriteriaRequest(refinementCriteria))
   };
 }
+
+export function clearAllRefinementCriteria() {
+  return function(dispatch) {
+    dispatch({type: ActionTypes.CLEAR_ALL_REFINEMENT_CRITERIA})
+  }
+}

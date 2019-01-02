@@ -28,6 +28,10 @@ class App extends Component {
     const refinementCriteria = { field: 'participants', value: participant };
     this.props.refinementActions.updateRefinementCriteria(refinementCriteria);
   };
+
+  clearAllRefinementCriteria = () => {
+    this.props.refinementActions.clearAllRefinementCriteria();
+  }
   render() {
     return (
       <Container className="App">
@@ -42,7 +46,7 @@ class App extends Component {
           <Col md="4" lg="4" sm="4">
             <Row className="refinement-list clear-all-filters-container">
               {this.props.searchCriteria.refinementCriteria.length > 0 && (
-                <Button size="sm">clear all</Button>
+                <Button size="sm" onClick={this.clearAllRefinementCriteria}>clear all</Button>
               )}
             </Row>
             <Row className="refinement-list">
