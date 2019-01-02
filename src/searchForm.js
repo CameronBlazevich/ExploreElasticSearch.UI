@@ -1,9 +1,19 @@
-import React from "react";
+import React from 'react';
+import {
+  Form,
+  Label,
+  InputGroup,
+  InputGroupText,
+  InputGroupAddon,
+  Input,
+  Button
+} from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class SearchForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: "" };
+    this.state = { value: '' };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,17 +30,20 @@ class SearchForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Search Term:
-          <input
-            type="text"
-            value={this.state.value}
-            onChange={this.handleChange}
-          />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
+        <Form className="search-form" onSubmit={this.handleSubmit}>
+          <InputGroup>
+            <Input
+              id="searchTerm"
+              type="text"
+              bsSize="sm"
+              value={this.state.value}
+              onChange={this.handleChange}
+            />
+            <InputGroupAddon addonType="append">
+              <Button className="search-form-button" size="sm"><FontAwesomeIcon icon="search"></FontAwesomeIcon></Button>
+            </InputGroupAddon>
+          </InputGroup>
+        </Form>
     );
   }
 }
