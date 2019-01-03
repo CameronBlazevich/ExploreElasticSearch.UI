@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Row, Col, Button, Container } from 'reactstrap';
+import  Select  from 'react-select';
 import logo from './logo.svg';
 import './App.css';
 import SearchForm from './searchForm';
@@ -60,24 +61,26 @@ class App extends Component {
               />
             </Row>
             <Row className="refinement-list">
-              <RefinementList
+                <Select className="participant-dropdown" isMulti options={this.props.searchResults.participants.map(p => ({value: p.displayText, label: p.displayText }))}></Select>
+              {/* <RefinementList
                 refinementListItems={this.props.searchResults.participants}
                 onItemClick={this.handleParticipantSearchRefinement}
                 attributeName="participants"
                 refinementCriteria={
                   this.props.searchCriteria.refinementCriteria
                 }
-              />
+              /> */}
             </Row>
           </Col>
 
-          <div className="col-md-8">
+
+          <Col md="8">
             {this.props.refinedSearchResults && (
               <SearchResultCollection
                 searchResults={this.props.refinedSearchResults}
               />
             )}
-          </div>
+          </Col>
         </Row>
       </Container>
     );

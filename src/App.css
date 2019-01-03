@@ -34,6 +34,10 @@
   min-width: 6vh;
 }
 
+.participant-dropdown {
+  min-width: 15vh;
+}
+
 .clear-all-filters-container {
   min-height: 40px;
 }

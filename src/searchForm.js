@@ -1,9 +1,7 @@
 import React from 'react';
 import {
   Form,
-  Label,
   InputGroup,
-  InputGroupText,
   InputGroupAddon,
   Input,
   Button
