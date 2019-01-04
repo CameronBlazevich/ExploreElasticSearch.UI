@@ -1,4 +1,3 @@
-import { union } from 'lodash.union';
 import * as ActionTypes from '../actions/actionTypes';
 
 export default (state = {}, action) => {

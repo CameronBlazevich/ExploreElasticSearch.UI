@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Row, Col, Button, Container } from 'reactstrap';
-import  Select  from 'react-select';
+import Select from 'react-select';
 import logo from './logo.svg';
 import './App.css';
 import SearchForm from './searchForm';
@@ -21,18 +21,39 @@ class App extends Component {
   handleSearchRequest = searchTerm => {
     this.props.searchActions.doSearch(searchTerm);
   };
+  
   handleAutherSearchRefinement = author => {
     const refinementCriteria = { field: 'author', value: author };
     this.props.refinementActions.updateRefinementCriteria(refinementCriteria);
   };
-  handleParticipantSearchRefinement = participant => {
-    const refinementCriteria = { field: 'participants', value: participant };
-    this.props.refinementActions.updateRefinementCriteria(refinementCriteria);
+
+  handleParticipantSearchRefinement = (_, selectionMetadata) => {
+    switch (selectionMetadata.action) {
+      case "clear":
+        this.clearAllRefinementCriteria();
+        break;
+      case "remove-value":
+      case "pop-value":
+        let refinementCriteria = { field: 'participants', value: selectionMetadata.removedValue.value };
+        this.updateRefinementCriteria(refinementCriteria);
+        break;
+      case "select-option":
+        refinementCriteria = { field: 'participants', value: selectionMetadata.option.value };
+        this.updateRefinementCriteria(refinementCriteria);
+        break;
+      default:
+        console.log(`Unexpected selector action: ${selectionMetadata.action}`);
+        break;
+    }
   };
+    
+  updateRefinementCriteria = (refinementCriteria) => {
+    this.props.refinementActions.updateRefinementCriteria(refinementCriteria);
+  }
 
   clearAllRefinementCriteria = () => {
     this.props.refinementActions.clearAllRefinementCriteria();
-  }
+  };
   render() {
     return (
       <Container className="App">
@@ -47,7 +68,9 @@ class App extends Component {
           <Col md="4" lg="4" sm="4">
             <Row className="refinement-list clear-all-filters-container">
               {this.props.searchCriteria.refinementCriteria.length > 0 && (
-                <Button size="sm" onClick={this.clearAllRefinementCriteria}>clear all</Button>
+                <Button size="sm" onClick={this.clearAllRefinementCriteria}>
+                  clear all
+                </Button>
               )}
             </Row>
             <Row className="refinement-list">
@@ -61,7 +84,17 @@ class App extends Component {
               />
             </Row>
             <Row className="refinement-list">
-                <Select className="participant-dropdown" isMulti options={this.props.searchResults.participants.map(p => ({value: p.displayText, label: p.displayText }))}></Select>
+              {this.props.searchCriteria.refinementCriteria.some(sc => sc.field === 'participants') && <h5>Participants Filter</h5>}
+              <Select
+                className="participant-dropdown"
+                placeholder="Participants"
+                isMulti
+                onChange={this.handleParticipantSearchRefinement}
+                options={this.props.searchResults.participants.map(p => ({
+                  value: p.displayText,
+                  label: p.displayText
+                }))}
+              />
               {/* <RefinementList
                 refinementListItems={this.props.searchResults.participants}
                 onItemClick={this.handleParticipantSearchRefinement}
@@ -72,7 +105,6 @@ class App extends Component {
               /> */}
             </Row>
           </Col>
-
 
           <Col md="8">
             {this.props.refinedSearchResults && (
