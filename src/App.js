@@ -21,24 +21,25 @@ class App extends Component {
   handleSearchRequest = searchTerm => {
     this.props.searchActions.doSearch(searchTerm);
   };
-  
+
   handleAutherSearchRefinement = author => {
     const refinementCriteria = { field: 'author', value: author };
     this.props.refinementActions.updateRefinementCriteria(refinementCriteria);
   };
 
   handleParticipantSearchRefinement = (_, selectionMetadata) => {
+    let refinementCriteria = { field: 'participants'};
     switch (selectionMetadata.action) {
       case "clear":
         this.clearAllRefinementCriteria();
         break;
       case "remove-value":
       case "pop-value":
-        let refinementCriteria = { field: 'participants', value: selectionMetadata.removedValue.value };
+        refinementCriteria.value = selectionMetadata.removedValue.value 
         this.updateRefinementCriteria(refinementCriteria);
         break;
       case "select-option":
-        refinementCriteria = { field: 'participants', value: selectionMetadata.option.value };
+        refinementCriteria.value = selectionMetadata.option.value;
         this.updateRefinementCriteria(refinementCriteria);
         break;
       default:
@@ -88,6 +89,7 @@ class App extends Component {
               <Select
                 className="participant-dropdown"
                 placeholder="Participants"
+                closeMenuOnSelect={false}
                 isMulti
                 onChange={this.handleParticipantSearchRefinement}
                 options={this.props.searchResults.participants.map(p => ({
