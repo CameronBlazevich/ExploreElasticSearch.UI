@@ -26,7 +26,7 @@
 }
 
 .search-form {
-  padding:5px;
+  padding: 5px;
   margin: 5px;
 }
 
@@ -56,6 +56,7 @@
 }
 
 .search-result-preview {
+  padding: 5px;
   font-size: 0.8em;
 }
 
@@ -64,14 +65,14 @@ p > span {
 }
 
 .parent-article {
-  height:300px;
-  overflow-y: scroll;
-  margin:5px;
+  height: fit-content;
+  /* overflow-y: scroll; */
+  margin: 5px;
   border: 1px solid grey;
   padding: 5px;
 }
 
 .refinement-list {
-  margin:5px;
-  padding:3px;
+  margin: 5px;
+  padding: 3px;
 }

@@ -1,27 +1,65 @@
-import React from "react";
-import { Media } from "reactstrap";
-// function SearchResult(props) {
-//   const strippedText = props.searchResult.replace(/\r\n\r\n/g, "\r\n");
-//   const splitText = strippedText
-//     .split("\r\n")
-//     .map(text => <p dangerouslySetInnerHTML={{ __html: text }} />);
-//   return <div className="search-result row">{splitText}</div>;
-// }
+import React, { useState } from "react";
+import {
+  Media,
+  TabContent,
+  TabPane,
+  Nav,
+  NavItem,
+  NavLink,
+  Row,
+  Col,
+} from "reactstrap";
+import classnames from "classnames";
 
-function SearchResult({ searchResult }) {
-  const highlights = searchResult.highlights.map(highlight => <p
-    className="search-result-preview"
-    dangerouslySetInnerHTML={{ __html: highlight.snippet }}
-  />)
+const SearchResult = (props) => {
+  const { searchResult } = props;
+  const [activeTab, setActiveTab] = useState("0");
+
+  const toggle = (tab) => {
+    if (activeTab !== tab) setActiveTab(tab);
+  };
+
+  const tabLinks = searchResult.highlights.map((highlight, index) => (
+    <NavItem key={index}>
+      <NavLink
+        className={classnames({ active: activeTab === `${index}` })}
+        onClick={() => {
+          toggle(`${index}`);
+        }}
+      >
+        {index + 1}
+      </NavLink>
+    </NavItem>
+  ));
+
+  const highlights = searchResult.highlights.map((highlight, index) => (
+    <TabPane key={index} tabId={`${index}`}>
+      <Row>
+        <Col>
+          <p
+            className="search-result-preview"
+            dangerouslySetInnerHTML={{ __html: highlight.snippet }}
+          />
+        </Col>
+      </Row>
+    </TabPane>
+  ));
+
   return (
     <Media>
       <Media body className="parent-article">
         <Media heading>{searchResult.parentArticle.title}</Media>
-        <Media><h6>{searchResult.parentArticle.metaTitle} by {searchResult.parentArticle.author}</h6></Media>
-        {highlights}
+        <Media>
+          <h6>
+            {searchResult.parentArticle.metaTitle} by{" "}
+            {searchResult.parentArticle.author}
+          </h6>
+        </Media>
+        <Nav tabs>{tabLinks}</Nav>
+        <TabContent activeTab={activeTab}>{highlights}</TabContent>
       </Media>
     </Media>
   );
-}
+};
 
 export default SearchResult;
