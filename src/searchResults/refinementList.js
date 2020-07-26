@@ -1,22 +1,23 @@
-import React from 'react';
-import RefinementListItem from './refinementListItem';
+import React from "react";
+import RefinementListItem from "./refinementListItem";
 
 function RefinementList(props) {
   const {
     attributeName,
     refinementListItems,
     onItemClick,
-    refinementCriteria
+    refinementCriteria,
   } = props;
   const filteredRefinementCriteria = refinementCriteria.filter(
-    rf => rf.field === attributeName
+    (rf) => rf.field === attributeName
   );
-  const items = refinementListItems.map(rli => (
+  const items = refinementListItems.map((rli, index) => (
     <RefinementListItem
+      key={index}
       item={rli}
       onItemClick={onItemClick}
       isChecked={filteredRefinementCriteria.some(
-        frc => frc.value === rli.displayText
+        (frc) => frc.value === rli.displayText
       )}
     />
   ));
