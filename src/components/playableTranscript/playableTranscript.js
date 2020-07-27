@@ -19,7 +19,7 @@ export const PlayableTranscript = (props) => {
         setPlaybackToStartOfWord={setPlaybackToStartOfWord}
         playAction={playAction}
         pauseAction={pauseAction}
-      ></PlayableParagraph>
+      />
     );
   });
 
