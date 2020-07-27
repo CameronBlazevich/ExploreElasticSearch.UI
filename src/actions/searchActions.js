@@ -1,5 +1,4 @@
 import * as ActionTypes from "./actionTypes";
-// import HighlightsApi from "../api/highlightsApiMock";
 import SearchResultApi from "../api/searchResultsApi";
 
 export function searchRequest(searchTerm) {
@@ -14,10 +13,10 @@ export function doSearch(searchTerm) {
   return function(dispatch) {
     dispatch(searchRequest(searchTerm));
     SearchResultApi.search(searchTerm)
-      .then(searchResults => {
+      .then((searchResults) => {
         dispatch(searchRequestSuccess(searchResults));
       })
-      .catch(error => {
+      .catch((error) => {
         throw error;
       });
   };

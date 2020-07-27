@@ -1,11 +1,16 @@
 import React, { Component } from "react";
 import TranscriptApi from "../../api/playableTranscript/transcriptApiMock";
 import { PlayableTranscript } from "./playableTranscript";
+import { bindActionCreators } from "redux";
+import * as playableTranscriptActions from "../../actions/playableTranscriptActions";
+import { connect } from "react-redux";
 
 class Transcript extends Component {
-  render() {
+  componentDidMount() {
     const { mediaId } = this.props.match.params;
-    const transcript = this.getTranscript(mediaId);
+    this.props.playableTranscriptActions.getTranscript(mediaId);
+  }
+  render() {
     return (
       <div className="Transcript">
         <div className="row">
@@ -21,7 +26,7 @@ class Transcript extends Component {
         </div>
         <div className="offset-md-4 col-md-8">
           <PlayableTranscript
-            playableTranscript={transcript}
+            playableTranscript={this.props.playableTranscript}
             setPlaybackToStartOfWord={this.skipAhead}
             playAction={this.playAction}
             pauseAction={this.pauseAction}
@@ -96,4 +101,20 @@ class Transcript extends Component {
   }
 }
 
-export default Transcript;
+const mapStateToProps = (state) => ({
+  playableTranscript: state.playableTranscript,
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    playableTranscriptActions: bindActionCreators(
+      playableTranscriptActions,
+      dispatch
+    ),
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Transcript);
